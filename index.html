@@ -99,7 +99,6 @@
             box-shadow: 0 0 8px var(--primary-glow);
         }
 
-        /* 3D Card Style */
         .card-3d {
             background: var(--card-bg);
             border-radius: 16px;
@@ -107,7 +106,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             transform-style: preserve-3d;
             position: relative;
         }
@@ -271,6 +270,52 @@
         .tagcloud { font-weight: 600; }
         .tagcloud--item:hover { color: var(--primary-glow) !important; }
 
+        .orbital-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            pointer-events: none; 
+        }
+
+        .ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            border-top-color: var(--primary-glow);
+            opacity: 0.7;
+            animation: orbit 10s linear infinite;
+        }
+
+        .ring:nth-child(2) {
+            animation-delay: -3.3s;
+            animation-duration: 8s;
+            border-top-color: transparent;
+            border-right-color: var(--secondary-glow);
+            transform: rotateX(65deg) rotateY(20deg);
+        }
+
+        .ring:nth-child(3) {
+            animation-delay: -6.6s;
+            animation-duration: 12s;
+            border-top-color: transparent;
+            border-left-color: #fff;
+            transform: rotateX(-65deg) rotateY(10deg);
+        }
+
+        @keyframes orbit {
+            from {
+                transform: rotateZ(0deg) rotateX(75deg) rotateY(0deg);
+            }
+            to {
+                transform: rotateZ(360deg) rotateX(75deg) rotateY(0deg);
+            }
+        }
+        
         @media (max-width: 768px) {
             .section { padding: 4rem 1.25rem; }
             .section-title { font-size: 2rem; margin-bottom: 3rem; }
@@ -299,6 +344,12 @@
             </div>
             <div class="relative flex justify-center items-center" style="perspective: 1000px;">
                 <div id="hero-image-wrapper" class="w-64 h-64 md:w-80 md:h-80 relative">
+                    <div class="orbital-rings">
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                        <div class="ring"></div>
+                    </div>
+                    
                     <div class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-fuchsia-600 blur-2xl opacity-50 animate-pulse"></div>
                     <img src="./profile.JPG" alt="Indra Aryadi" class="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl shadow-fuchsia-500/20 relative z-10">
                 </div>
@@ -346,7 +397,6 @@
                 </div>
             </div>
             <div class="flex items-center justify-center min-h-[300px] reveal">
-                <!-- 3D Skill Cloud will be rendered here -->
                 <div id="skill-globe" class="w-full h-full"></div>
             </div>
         </div>
@@ -444,15 +494,80 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section (SUDAH DIPERBAIKI) -->
     <section id="projects" class="section bg-dark-bg/30">
         <h2 class="section-title reveal">Featured Projects</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="card-3d reveal"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Limiter Library</h3><p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber, redis</p><p class="text-slate-300 text-sm mb-4">Go Fiber third-party library for rate limiting using Redis and three algorithms.</p></div><a href="https://github.com/NarmadaWeb/limiter" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
-            <div class="card-3d reveal" style="transition-delay: 100ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Minify Library</h3><p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber</p><p class="text-slate-300 text-sm mb-4">Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.</p></div><a href="https://github.com/NarmadaWeb/gonify" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
-            <div class="card-3d reveal" style="transition-delay: 200ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4 text-yellow-400 text-2xl shadow-inner shadow-yellow-500/20"><i class="fab fa-js"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Sqlc-Snippets</h3><p class="text-yellow-400 text-sm font-medium mb-3">Javascript, VS Code</p><p class="text-slate-300 text-sm mb-4">VS Code Extension for Sqlc and Postgres snippets to boost development speed.</p></div><a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" class="inline-flex items-center text-yellow-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
-            <div class="card-3d reveal" style="transition-delay: 300ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 text-green-400 text-2xl shadow-inner shadow-green-500/20"><i class="fas fa-leaf"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">bertani.ai</h3><p class="text-green-400 text-sm font-medium mb-3">Golang, Fiber, Gorm, AI</p><p class="text-slate-300 text-sm mb-4">Developed an agricultural website equipped with AI for agricultural analysis.</p></div><a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" class="inline-flex items-center text-green-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
-            <div class="card-3d reveal" style="transition-delay: 400ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 text-blue-400 text-2xl shadow-inner shadow-blue-500/20"><i class="fab fa-python"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Django Fullstack</h3><p class="text-blue-400 text-sm font-medium mb-3">Python, Django</p><p class="text-slate-300 text-sm mb-4">Created a Third Party library for Django to simplify and accelerate full-stack development.</p></div><a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" class="inline-flex items-center text-blue-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
+            
+            <a href="https://github.com/NarmadaWeb/limiter" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <div class="card-3d reveal h-full">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex-grow">
+                            <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div>
+                            <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Limiter Library</h3>
+                            <p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber, redis</p>
+                            <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library for rate limiting using Redis and three algorithms.</p>
+                        </div>
+                        <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://github.com/NarmadaWeb/gonify" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <div class="card-3d reveal h-full" style="transition-delay: 100ms;">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex-grow">
+                            <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div>
+                            <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Minify Library</h3>
+                            <p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber</p>
+                            <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.</p>
+                        </div>
+                        <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <div class="card-3d reveal h-full" style="transition-delay: 200ms;">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex-grow">
+                            <div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4 text-yellow-400 text-2xl shadow-inner shadow-yellow-500/20"><i class="fab fa-js"></i></div>
+                            <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Sqlc-Snippets</h3>
+                            <p class="text-yellow-400 text-sm font-medium mb-3">Javascript, VS Code</p>
+                            <p class="text-slate-300 text-sm mb-4">VS Code Extension for Sqlc and Postgres snippets to boost development speed.</p>
+                        </div>
+                        <span class="inline-flex items-center text-yellow-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <div class="card-3d reveal h-full" style="transition-delay: 300ms;">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex-grow">
+                            <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 text-green-400 text-2xl shadow-inner shadow-green-500/20"><i class="fas fa-leaf"></i></div>
+                            <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">bertani.ai</h3>
+                            <p class="text-green-400 text-sm font-medium mb-3">Golang, Fiber, Gorm, AI</p>
+                            <p class="text-slate-300 text-sm mb-4">Developed an agricultural website equipped with AI for agricultural analysis.</p>
+                        </div>
+                        <span class="inline-flex items-center text-green-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <div class="card-3d reveal h-full" style="transition-delay: 400ms;">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex-grow">
+                            <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 text-blue-400 text-2xl shadow-inner shadow-blue-500/20"><i class="fab fa-python"></i></div>
+                            <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Django Fullstack</h3>
+                            <p class="text-blue-400 text-sm font-medium mb-3">Python, Django</p>
+                            <p class="text-slate-300 text-sm mb-4">Created a Third Party library for Django to simplify and accelerate full-stack development.</p>
+                        </div>
+                        <span class="inline-flex items-center text-blue-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                    </div>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -468,12 +583,22 @@
                     <div class="flex items-start card-3d p-4"><div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400"><i class="fab fa-github"></i></div><div><h4 class="font-medium text-white mb-1">GitHub</h4><a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">github.com/RajaSunrise</a></div></div>
                 </div>
             </div>
-            <div class="card-3d p-8 reveal" style="transition-delay: 200ms;">
+            <!-- Form Kontak (SUDAH DIPERBAIKI) -->
+            <div class="card-3d no-tilt p-8 reveal" style="transition-delay: 200ms;">
                 <h3 class="text-2xl font-bold text-white mb-6 font-[Orbitron]">Send a Message</h3>
-                <form class="space-y-4">
-                    <div><label class="block text-slate-300 mb-2">Full Name</label><input type="text" class="form-input" placeholder="Your name"></div>
-                    <div><label class="block text-slate-300 mb-2">Email Address</label><input type="email" class="form-input" placeholder="your.email@example.com"></div>
-                    <div><label class="block text-slate-300 mb-2">Message</label><textarea class="form-input min-h-[120px]" placeholder="Your message..."></textarea></div>
+                <form action="https://formspree.io/f/your_unique_id" method="POST" class="space-y-4">
+                    <div>
+                        <label for="fullName" class="block text-slate-300 mb-2">Full Name</label>
+                        <input type="text" id="fullName" name="name" class="form-input" placeholder="Your name" required>
+                    </div>
+                    <div>
+                        <label for="emailAddress" class="block text-slate-300 mb-2">Email Address</label>
+                        <input type="email" id="emailAddress" name="email" class="form-input" placeholder="your.email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-slate-300 mb-2">Message</label>
+                        <textarea id="message" name="message" class="form-input min-h-[120px]" placeholder="Your message..." required></textarea>
+                    </div>
                     <button type="submit" class="btn w-full mt-4"><i class="fas fa-paper-plane mr-2"></i> Send Message</button>
                 </form>
             </div>
@@ -511,16 +636,17 @@
                     keep: true,
                     itemClass: 'tagcloud--item',
                 });
-                // Recalculate radius on resize
                 window.addEventListener('resize', () => {
                      const newRadius = Math.min(500, skillGlobeContainer.clientWidth, 300) / 2;
                      TagCloud(skillGlobeContainer, skills, { radius: newRadius });
                 });
             }
 
-            // --- 3D Card Tilt Effect ---
-            const cards = document.querySelectorAll('.card-3d');
+            // --- 3D Card Tilt Effect (SUDAH DIPERBAIKI) ---
+            const cards = document.querySelectorAll('.card-3d:not(.no-tilt)');
             cards.forEach(card => {
+                const targetElement = card.parentElement.tagName === 'A' ? card.parentElement : card;
+                
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left;
@@ -529,10 +655,13 @@
                     const centerY = rect.height / 2;
                     const rotateX = (y - centerY) / 20;
                     const rotateY = (centerX - x) / 20;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                    targetElement.style.transition = 'transform 0.1s ease-out';
+                    targetElement.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
                 });
+
                 card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                    targetElement.style.transition = 'transform 0.3s ease-in-out';
+                    targetElement.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
                 });
             });
 
@@ -579,23 +708,26 @@
                 while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
                 
                 navLinks.forEach((link) => link.classList.remove('active'));
-                const activeLink = document.querySelector(`.nav-link[href="#${sections[index].id}"]`);
-                if (activeLink) activeLink.classList.add('active');
+                if (sections[index]) {
+                    const activeLink = document.querySelector(`.nav-link[href="#${sections[index].id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
             }
 
             window.addEventListener('scroll', updateActiveLink);
-            updateActiveLink(); // Initial call
+            updateActiveLink(); 
             
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
                     if (target) {
                         window.scrollTo({
                             top: target.offsetTop - 80,
                             behavior: 'smooth'
                         });
-                        if (!mobileMenu.classList.contains('hidden')) {
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                             mobileMenuButton.click();
                         }
                     }
