@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indra Aryadi | Backend Developer (Python & Golang)</title>
+    <title>RajaSunrise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/TagCloud@2.2.0/dist/TagCloud.min.js"></script>
+
     <style>
         :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
+            --primary-glow: #00f6ff;
+            --secondary-glow: #ff00f2;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(22, 22, 44, 0.4);
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
         }
@@ -25,6 +26,15 @@
             padding: 0;
             box-sizing: border-box;
         }
+
+        @keyframes rotate-aurora {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 5px var(--primary-glow); }
+            50% { transform: scale(1.2); box-shadow: 0 0 15px var(--primary-glow), 0 0 25px var(--primary-glow); }
+        }
         
         body {
             font-family: 'Inter', sans-serif;
@@ -32,154 +42,206 @@
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 150vw;
+            height: 150vw;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 40%);
+            opacity: 0.08;
+            animation: rotate-aurora 60s linear infinite;
+            z-index: -1;
+        }
+        body::after {
+            background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 40%);
+            animation-delay: -30s;
         }
         
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary-glow), var(--secondary-glow)); border-radius: 4px; }
         
         .section {
-            padding: 5rem 1.5rem;
+            padding: 6rem 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
         
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
             text-align: center;
             margin-bottom: 4rem;
             position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             color: white;
+            text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--secondary-glow);
         }
         
-        .section-title:after {
+        .section-title::after {
             content: '';
             position: absolute;
-            bottom: -12px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
+            width: 100px;
             height: 4px;
-            background: var(--primary);
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
             border-radius: 2px;
+            box-shadow: 0 0 8px var(--primary-glow);
         }
-        
-        .card {
+
+        /* 3D Card Style */
+        .card-3d {
             background: var(--card-bg);
             border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
         }
-        
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        .card-3d::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: conic-gradient(from var(--angle), transparent 25%, var(--primary-glow), var(--secondary-glow), transparent 75%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spin 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card-3d:hover::before {
+            opacity: 1;
+        }
+        @property --angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+        @keyframes spin {
+          to {
+            --angle: 360deg;
+          }
         }
         
         .nav-link {
             position: relative;
             padding: 0.5rem 0;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
-        .nav-link:hover {
-            color: var(--primary);
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            text-shadow: 0 0 8px var(--primary-glow);
         }
-        
-        .nav-link:after {
+        .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
             transition: width 0.3s ease;
+            box-shadow: 0 0 5px var(--primary-glow);
         }
-        
-        .nav-link:hover:after,
-        .nav-link.active:after {
+        .nav-link:hover::after, .nav-link.active::after {
             width: 100%;
-        }
-        
-        .nav-link.active {
-            color: var(--primary);
         }
         
         .btn {
             display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 0.75rem 1.75rem;
+            position: relative;
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+            color: var(--dark-bg);
+            padding: 0.8rem 2rem;
             border-radius: 8px;
-            font-weight: 500;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
         .btn:hover {
-            background: transparent;
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 246, 255, 0.2), 0 10px 20px rgba(255, 0, 242, 0.2);
+        }
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background: var(--primary);
             color: white;
+            border-image: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow)) 1;
+        }
+        .btn-outline:hover {
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+            color: var(--dark-bg);
+            border-image: none;
+            border-color: transparent;
         }
         
         .timeline-item {
             position: relative;
-            padding-left: 2rem;
-            margin-bottom: 3rem;
+            padding-left: 3rem;
+            padding-bottom: 3rem;
         }
-        
         .timeline-item:last-child {
-            margin-bottom: 0;
+            padding-bottom: 0;
         }
-        
-        .timeline-item:before {
+        .timeline-item::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 2px;
+            left: 11px;
+            width: 4px;
             height: 100%;
-            background: var(--primary);
+            background: linear-gradient(var(--primary-glow), var(--secondary-glow));
+            box-shadow: 0 0 10px var(--primary-glow);
         }
-        
         .timeline-dot {
             position: absolute;
             top: 0;
-            left: -8px;
-            width: 16px;
-            height: 16px;
+            left: 0px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: var(--primary);
+            background: var(--dark-bg);
+            border: 4px solid var(--primary-glow);
             z-index: 1;
+            animation: pulse 2s infinite;
         }
         
         .form-input {
@@ -191,82 +253,65 @@
             color: var(--text-main);
             transition: all 0.3s ease;
         }
-        
         .form-input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 0 3px rgba(0, 246, 255, 0.3), 0 0 10px var(--primary-glow);
         }
         
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(50px) rotateX(-20deg) scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        
         .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) rotateX(0) scale(1);
         }
-        
+        .tagcloud { font-weight: 600; }
+        .tagcloud--item:hover { color: var(--primary-glow) !important; }
+
         @media (max-width: 768px) {
-            .section {
-                padding: 3rem 1.25rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 3rem;
-            }
+            .section { padding: 4rem 1.25rem; }
+            .section-title { font-size: 2rem; margin-bottom: 3rem; }
+            .hero-text { text-align: center; }
         }
     </style>
 </head>
 <body>
     <!-- Hero Section -->
-    <header id="hero" class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-20 px-4">
-        <div id="particles-js" class="absolute inset-0 z-0"></div>
-        <div class="container max-w-4xl mx-auto relative z-10 text-center px-4">
-            <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-white/10 mx-auto mb-8">
-                <img src="./profile.JPG" alt="Indra Aryadi" class="w-full h-full object-cover">
-            </div>
-            
-            <div class="mb-8">
-                <h1 class="text-5xl font-bold text-white mb-4">Indra Aryadi</h1>
-                <p class="text-xl text-slate-300 max-w-2xl mx-auto">
-                    Backend Developer specializing in Python & Golang
+    <header id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden py-20 px-4">
+        <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at center, rgba(10, 10, 26, 0.5) 0%, var(--dark-bg) 70%);"></div>
+        <div id="hero-content" class="container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12 relative z-10">
+            <div class="hero-text text-left">
+                <h1 class="text-5xl lg:text-7xl font-black text-white mb-4" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px rgba(0, 246, 255, 0.5);">RajaSunrise</h1>
+                <p class="text-xl text-slate-300 max-w-2xl">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-semibold">Backend Developer</span> specializing in Python & Golang.
                 </p>
+                <div class="flex flex-wrap justify-start gap-4 mt-8">
+                    <a href="#contact" class="btn">
+                        <i class="fas fa-paper-plane mr-2"></i> Contact Me
+                    </a>
+                    <a href="#projects" class="btn btn-outline">
+                        <i class="fas fa-code mr-2"></i> My Work
+                    </a>
+                </div>
             </div>
-            
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <a href="#contact" class="btn">
-                    <i class="fas fa-paper-plane mr-2"></i> Contact Me
-                </a>
-                <a href="#projects" class="btn btn-outline">
-                    <i class="fas fa-code mr-2"></i> View Projects
-                </a>
-            </div>
-            
-            <div class="flex justify-center space-x-6">
-                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-300 hover:text-white text-xl transition-colors">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-300 hover:text-white text-xl transition-colors">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="mailto:indra020204@gmail.com" class="text-slate-300 hover:text-white text-xl transition-colors">
-                    <i class="fas fa-envelope"></i>
-                </a>
+            <div class="relative flex justify-center items-center" style="perspective: 1000px;">
+                <div id="hero-image-wrapper" class="w-64 h-64 md:w-80 md:h-80 relative">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-fuchsia-600 blur-2xl opacity-50 animate-pulse"></div>
+                    <img src="./profile.JPG" alt="Indra Aryadi" class="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl shadow-fuchsia-500/20 relative z-10">
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav id="main-nav" class="sticky top-0 z-50 bg-dark-bg/80 backdrop-blur-md border-b border-slate-800">
+    <nav id="main-nav" class="sticky top-0 z-50 bg-dark-bg/50 backdrop-blur-lg border-b border-white/10">
         <div class="container max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-2xl font-bold text-white">
-                <span class="text-primary">I</span>A
+            <a href="#hero" class="text-3xl font-black text-white" style="font-family: 'Orbitron', sans-serif;">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500"></span>RajaSunrise
             </a>
-            
             <ul class="hidden md:flex space-x-8">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -274,12 +319,10 @@
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            
             <button id="mobile-menu-button" class="md:hidden text-slate-300">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
-        
         <div id="mobile-menu" class="md:hidden bg-card-bg hidden">
             <ul class="flex flex-col py-4">
                 <li class="px-6 py-3"><a href="#about" class="nav-link block">About</a></li>
@@ -293,177 +336,65 @@
 
     <!-- About Section -->
     <section id="about" class="section">
-        <h2 class="section-title">About Me</h2>
-        
-        <div class="max-w-3xl mx-auto">
-            <div class="card p-8">
-                <div class="prose prose-invert max-w-none">
-                    <p class="mb-6 text-lg">
-                        Hello! I'm a dedicated <span class="text-primary font-medium">Backend Developer</span> with a strong passion for designing, building, and maintaining <span class="text-primary font-medium">reliable, scalable, and high-performance</span> backend infrastructures.
-                    </p>
-                    
-                    <p class="mb-6">
-                        With a solid foundation in <span class="font-medium">Python</span> (proficient in Django & FastAPI) and <span class="font-medium">Golang</span> (experienced with Fiber, Gorm, & Sqlc), I'm skilled in transforming complex ideas into efficient software solutions. I'm always challenged by solving intricate problems and committed to producing clean, well-structured code.
-                    </p>
-                    
-                    <p class="mb-6">
-                        My philosophy is to prioritize <span class="font-medium">solid software architecture</span>, continuous <span class="font-medium">performance optimization</span>, and the application of <span class="font-medium">best development practices</span>. I believe this combination is key to delivering high-quality digital products that are not only functional but also provide an exceptional user experience.
-                    </p>
-                    
-                    <p>
-                        I'm a quick learner and always eager to explore new technologies to broaden my expertise in the dynamic world of software development.
-                    </p>
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="card-3d p-8 reveal">
+                <div class="prose prose-invert max-w-none text-slate-300">
+                    <p class="mb-6 text-lg">Hello! I'm a dedicated <span class="font-medium text-white">Backend Developer</span> with a strong passion for designing, building, and maintaining <span class="font-medium text-white">reliable, scalable, and high-performance</span> backend infrastructures.</p>
+                    <p class="mb-6">With a solid foundation in <span class="font-medium text-white">Python</span> and <span class="font-medium text-white">Golang</span>, I'm skilled in transforming complex ideas into efficient software solutions. I'm always challenged by solving intricate problems and committed to producing clean, well-structured code.</p>
+                    <p>I'm a quick learner and always eager to explore new technologies to broaden my expertise in the dynamic world of software development.</p>
                 </div>
+            </div>
+            <div class="flex items-center justify-center min-h-[300px] reveal">
+                <!-- 3D Skill Cloud will be rendered here -->
+                <div id="skill-globe" class="w-full h-full"></div>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="section bg-slate-900/30">
-        <h2 class="section-title">Technical Skills</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Programming Languages -->
-            <div class="card p-6">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                        <i class="fas fa-laptop-code text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold">Programming Languages</h3>
-                </div>
-                <ul class="space-y-2">
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Python
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Golang (Go)
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Javascript
-                    </li>
+    <section id="skills" class="section bg-dark-bg/30">
+        <h2 class="section-title reveal">Technical Skills</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card-3d p-6 reveal">
+                <div class="flex items-center mb-4"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fas fa-laptop-code"></i></div><h3 class="text-xl font-bold font-[Orbitron]">Languages</h3></div>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Python</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Golang (Go)</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Javascript</li>
                 </ul>
             </div>
-            
-            <!-- Python Stack -->
-            <div class="card p-6">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                        <i class="fab fa-python text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold">Python Stack</h3>
-                </div>
-                <ul class="space-y-2">
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Django & DRF
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        FastAPI
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Socketify
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Flet
-                    </li>
+            <div class="card-3d p-6 reveal" style="transition-delay: 100ms;">
+                <div class="flex items-center mb-4"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-python"></i></div><h3 class="text-xl font-bold font-[Orbitron]">Python Stack</h3></div>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Django & DRF</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>FastAPI</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>SQlAlchemy</li>
                 </ul>
             </div>
-            
-            <!-- Golang Stack -->
-            <div class="card p-6">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                        <i class="fab fa-golang text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold">Golang Stack</h3>
-                </div>
-                <ul class="space-y-2">
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Fiber
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Gorm
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Sqlc
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Socket.io and Websocket
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Goroutines & Channels
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        gRPC
-                    </li>
+            <div class="card-3d p-6 reveal" style="transition-delay: 200ms;">
+                <div class="flex items-center mb-4"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div><h3 class="text-xl font-bold font-[Orbitron]">Golang Stack</h3></div>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Fiber, Gorm, Sqlc</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>gRPC & Websockets</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Goroutines & Channels</li>
                 </ul>
             </div>
-            
-            <!-- Databases -->
-            <div class="card p-6">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                        <i class="fas fa-database text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold">Databases</h3>
-                </div>
-                <ul class="space-y-2">
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        PostgreSQL
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        MySQL / MariaDB
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Redis
-                    </li>
+            <div class="card-3d p-6 reveal" style="transition-delay: 300ms;">
+                <div class="flex items-center mb-4"><div class="w-12 h-12 rounded-lg bg-fuchsia-500/10 flex items-center justify-center mr-4 text-fuchsia-400 text-2xl shadow-inner shadow-fuchsia-500/20"><i class="fas fa-database"></i></div><h3 class="text-xl font-bold font-[Orbitron]">Databases</h3></div>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>PostgreSQL</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>MySQL / MariaDB</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Redis</li>
                 </ul>
             </div>
-            
-            <!-- Tools & DevOps -->
-            <div class="card p-6">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                        <i class="fas fa-tools text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-bold">Tools & DevOps</h3>
-                </div>
-                <ul class="space-y-2">
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Docker & Kubernetes
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Git & GitHub/GitLab
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        CI/CD (GitHub Actions)
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        RESTful APIs & Microservices
-                    </li>
-                    <li class="flex items-center">
-                        <div class="w-2 h-2 rounded-full bg-primary mr-3"></div>
-                        Linux, AWS (EC2, S3, RDS)
-                    </li>
+            <div class="card-3d p-6 reveal" style="transition-delay: 400ms;">
+                <div class="flex items-center mb-4"><div class="w-12 h-12 rounded-lg bg-fuchsia-500/10 flex items-center justify-center mr-4 text-fuchsia-400 text-2xl shadow-inner shadow-fuchsia-500/20"><i class="fas fa-tools"></i></div><h3 class="text-xl font-bold font-[Orbitron]">Tools & DevOps</h3></div>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Docker & Kubernetes</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Git & CI/CD</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>REST APIs & Microservices</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Linux & AWS</li>
                 </ul>
             </div>
         </div>
@@ -471,53 +402,41 @@
 
     <!-- Experience Section -->
     <section id="experience" class="section">
-        <h2 class="section-title">Work Experience</h2>
-        
+        <h2 class="section-title reveal">Work Experience</h2>
         <div class="max-w-3xl mx-auto">
             <div class="space-y-8">
-                <!-- Experience 1 -->
-                <div class="timeline-item">
+                <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="card p-6">
+                    <div class="card-3d p-6">
                         <div class="flex flex-wrap justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-xl font-bold text-white">Backend Developer</h3>
-                                <p class="text-primary font-medium">NarmadaWeb</p>
+                                <h3 class="text-xl font-bold text-white font-[Orbitron]">Backend Developer</h3>
+                                <p class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium">NarmadaWeb</p>
                             </div>
-                            <span class="text-slate-400 text-sm bg-slate-800 py-1 px-3 rounded-full mt-2 md:mt-0">Sep 2023 - Present</span>
+                            <span class="text-slate-400 text-sm bg-slate-800/50 py-1 px-3 rounded-full mt-2 md:mt-0">Sep 2023 - Present</span>
                         </div>
-                        
                         <ul class="list-disc list-inside text-slate-300 space-y-2">
-                            <li>Designing & developing Third Party libraries (Python/Django, Golang/Fiber)</li>
-                            <li>Optimized database queries (PostgreSQL), improving performance by 30%</li>
-                            <li>Developed the bertani.ai website using Go Fiber</li>
-                            <li>Implemented microservices architecture with Golang</li>
-                            <li>Built a website for an Art Studio</li>
-                            <li>Designed systems using WordPress</li>
-                            <li>Contributed to small projects using WordPress Divi</li>
-                            <li>Developed a website for an LKP (Training Institute)</li>
-                            <li>Designed systems with Golang</li>
-                            <li>Contributed to small projects using Golang</li>
+                            <li>Designing & developing Third Party libraries (Python/Django, Golang/Fiber).</li>
+                            <li>Optimized database queries (PostgreSQL), improving performance by 30%.</li>
+                            <li>Developed websites (bertani.ai, Art Studio) using Go Fiber and WordPress.</li>
+                            <li>Implemented microservices architecture with Golang.</li>
                         </ul>
                     </div>
                 </div>
-                
-                <!-- Experience 2 -->
-                <div class="timeline-item">
+                <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
-                    <div class="card p-6">
+                    <div class="card-3d p-6">
                         <div class="flex flex-wrap justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-xl font-bold text-white">Junior Backend Developer</h3>
-                                <p class="text-primary font-medium">Internship</p>
+                                <h3 class="text-xl font-bold text-white font-[Orbitron]">Junior Backend Developer</h3>
+                                <p class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium">Internship</p>
                             </div>
-                            <span class="text-slate-400 text-sm bg-slate-800 py-1 px-3 rounded-full mt-2 md:mt-0">Dec 2022 - Mar 2023</span>
+                            <span class="text-slate-400 text-sm bg-slate-800/50 py-1 px-3 rounded-full mt-2 md:mt-0">Dec 2022 - Mar 2023</span>
                         </div>
-                        
                         <ul class="list-disc list-inside text-slate-300 space-y-2">
-                            <li>Developed Website Creation Services</li>
-                            <li>Maintained and fixed bugs in existing systems</li>
-                            <li>Contributed to small projects using Django</li>
+                            <li>Developed Website Creation Services.</li>
+                            <li>Maintained and fixed bugs in existing systems.</li>
+                            <li>Contributed to small projects using Django.</li>
                         </ul>
                     </div>
                 </div>
@@ -526,309 +445,165 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="section bg-slate-900/30">
-        <h2 class="section-title">Featured Projects</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Project 1 -->
-            <div class="card">
-                <div class="p-6">
-                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <i class="fab fa-golang text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Third Party to limiter</h3>
-                    <p class="text-primary text-sm font-medium mb-3">golang, fiber</p>
-                    <p class="text-slate-300 text-sm mb-4">
-                        Built a Go Fiber third-party library for rate limiting using Redis and three algorithms.
-                    </p>
-                    <a href="https://github.com/NarmadaWeb/limiter" target="_blank" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm">
-                        View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Project 2 -->
-            <div class="card">
-                <div class="p-6">
-                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <i class="fab fa-golang text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Third Party to Minify</h3>
-                    <p class="text-primary text-sm font-medium mb-3">Golang, fiber</p>
-                    <p class="text-slate-300 text-sm mb-4">
-                        Built a Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.
-                    </p>
-                    <a href="https://github.com/NarmadaWeb/gonify" target="_blank" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm">
-                        View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Project 3 -->
-            <div class="card">
-                <div class="p-6">
-                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <i class="fab fa-js text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Sqlc-Snippets</h3>
-                    <p class="text-primary text-sm font-medium mb-3">Javascript</p>
-                    <p class="text-slate-300 text-sm mb-4">
-                        Extensions Snippets Sqlc and Postgres For Visual Studio Code
-                    </p>
-                    <a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm">
-                        View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Project 4 -->
-            <div class="card">
-                <div class="p-6">
-                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <i class="fab fa-golang text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Website bertani.ai</h3>
-                    <p class="text-primary text-sm font-medium mb-3">Golang, fiber, Gorm, PostgreSQL, Redis</p>
-                    <p class="text-slate-300 text-sm mb-4">
-                        Developed an agricultural website equipped with AI for agricultural analysis.
-                    </p>
-                    <a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm">
-                        View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Project 5 -->
-            <div class="card">
-                <div class="p-6">
-                    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <i class="fab fa-python text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Third Party for Django</h3>
-                    <p class="text-primary text-sm font-medium mb-3">Python, Django</p>
-                    <p class="text-slate-300 text-sm mb-4">
-                        Created a Third Party library for Django to simplify full-stack development.
-                    </p>
-                    <a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-sm">
-                        View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
-            </div>
+    <section id="projects" class="section bg-dark-bg/30">
+        <h2 class="section-title reveal">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card-3d reveal"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Limiter Library</h3><p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber, redis</p><p class="text-slate-300 text-sm mb-4">Go Fiber third-party library for rate limiting using Redis and three algorithms.</p></div><a href="https://github.com/NarmadaWeb/limiter" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
+            <div class="card-3d reveal" style="transition-delay: 100ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20"><i class="fab fa-golang"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Minify Library</h3><p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber</p><p class="text-slate-300 text-sm mb-4">Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.</p></div><a href="https://github.com/NarmadaWeb/gonify" target="_blank" class="inline-flex items-center text-cyan-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
+            <div class="card-3d reveal" style="transition-delay: 200ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4 text-yellow-400 text-2xl shadow-inner shadow-yellow-500/20"><i class="fab fa-js"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Sqlc-Snippets</h3><p class="text-yellow-400 text-sm font-medium mb-3">Javascript, VS Code</p><p class="text-slate-300 text-sm mb-4">VS Code Extension for Sqlc and Postgres snippets to boost development speed.</p></div><a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" class="inline-flex items-center text-yellow-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
+            <div class="card-3d reveal" style="transition-delay: 300ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 text-green-400 text-2xl shadow-inner shadow-green-500/20"><i class="fas fa-leaf"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">bertani.ai</h3><p class="text-green-400 text-sm font-medium mb-3">Golang, Fiber, Gorm, AI</p><p class="text-slate-300 text-sm mb-4">Developed an agricultural website equipped with AI for agricultural analysis.</p></div><a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" class="inline-flex items-center text-green-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
+            <div class="card-3d reveal" style="transition-delay: 400ms;"><div class="p-6 h-full flex flex-col"><div class="flex-grow"><div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 text-blue-400 text-2xl shadow-inner shadow-blue-500/20"><i class="fab fa-python"></i></div><h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Django Fullstack</h3><p class="text-blue-400 text-sm font-medium mb-3">Python, Django</p><p class="text-slate-300 text-sm mb-4">Created a Third Party library for Django to simplify and accelerate full-stack development.</p></div><a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" class="inline-flex items-center text-blue-400 hover:text-white font-medium text-sm transition-colors">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></a></div></div>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <h2 class="section-title">Get In Touch</h2>
-        
-        <div class="max-w-4xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="card p-8">
-                    <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                                <i class="fas fa-envelope text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-white mb-1">Email</h4>
-                                <a href="mailto:indra020204@gmail.com" class="text-slate-300 hover:text-primary transition-colors">indra020204@gmail.com</a>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                                <i class="fab fa-linkedin text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-white mb-1">LinkedIn</h4>
-                                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-300 hover:text-primary transition-colors">linkedin.com/in/indra-aryadi</a>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                                <i class="fab fa-github text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-white mb-1">GitHub</h4>
-                                <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-300 hover:text-primary transition-colors">github.com/RajaSunrise</a>
-                            </div>
-                        </div>
-                    </div>
+        <h2 class="section-title reveal">Get In Touch</h2>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="reveal">
+                <h3 class="text-2xl font-bold text-white mb-6 font-[Orbitron]">Contact Information</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start card-3d p-4"><div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400"><i class="fas fa-envelope"></i></div><div><h4 class="font-medium text-white mb-1">Email</h4><a href="mailto:indra020204@gmail.com" class="text-slate-300 hover:text-cyan-400 transition-colors">indra020204@gmail.com</a></div></div>
+                    <div class="flex items-start card-3d p-4"><div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400"><i class="fab fa-linkedin"></i></div><div><h4 class="font-medium text-white mb-1">LinkedIn</h4><a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">linkedin.com/in/indra-aryadi</a></div></div>
+                    <div class="flex items-start card-3d p-4"><div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400"><i class="fab fa-github"></i></div><div><h4 class="font-medium text-white mb-1">GitHub</h4><a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">github.com/RajaSunrise</a></div></div>
                 </div>
-                
-                <div class="card p-8">
-                    <h3 class="text-2xl font-bold text-white mb-6">Send a Message</h3>
-                    
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-slate-300 mb-2">Full Name</label>
-                            <input type="text" class="form-input" placeholder="Your name">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-slate-300 mb-2">Email Address</label>
-                            <input type="email" class="form-input" placeholder="your.email@example.com">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-slate-300 mb-2">Message</label>
-                            <textarea class="form-input min-h-[120px]" placeholder="Your message..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn w-full">
-                            <i class="fas fa-paper-plane mr-2"></i> Send Message
-                        </button>
-                    </form>
-                </div>
+            </div>
+            <div class="card-3d p-8 reveal" style="transition-delay: 200ms;">
+                <h3 class="text-2xl font-bold text-white mb-6 font-[Orbitron]">Send a Message</h3>
+                <form class="space-y-4">
+                    <div><label class="block text-slate-300 mb-2">Full Name</label><input type="text" class="form-input" placeholder="Your name"></div>
+                    <div><label class="block text-slate-300 mb-2">Email Address</label><input type="email" class="form-input" placeholder="your.email@example.com"></div>
+                    <div><label class="block text-slate-300 mb-2">Message</label><textarea class="form-input min-h-[120px]" placeholder="Your message..."></textarea></div>
+                    <button type="submit" class="btn w-full mt-4"><i class="fas fa-paper-plane mr-2"></i> Send Message</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-10 border-t border-slate-800 text-center">
+    <footer class="py-10 border-t border-white/10 text-center">
         <div class="container max-w-6xl mx-auto px-6">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-400 hover:text-white transition-colors">
-                    <i class="fab fa-linkedin text-xl"></i>
-                </a>
-                <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-400 hover:text-white transition-colors">
-                    <i class="fab fa-github text-xl"></i>
-                </a>
-                <a href="mailto:indra020204@gmail.com" class="text-slate-400 hover:text-white transition-colors">
-                    <i class="fas fa-envelope text-xl"></i>
-                </a>
+                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-cyan-400"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-fuchsia-400"><i class="fab fa-github"></i></a>
+                <a href="mailto:indra020204@gmail.com" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-yellow-400"><i class="fas fa-envelope"></i></a>
             </div>
-            
-            <p class="text-slate-500">
-                &copy; <span id="current-year"></span> Indra Aryadi. All rights reserved.
-            </p>
+            <p class="text-slate-500">© <span id="current-year"></span> Indra Aryadi. All rights reserved. Designed with <i class="fas fa-heart text-red-500"></i> & <i class="fas fa-code text-cyan-400"></i>.</p>
         </div>
     </footer>
 
     <script>
-        // Initialize particles
-        if (typeof particlesJS !== 'undefined') {
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 40, density: { enable: true, value_area: 800 } },
-                    color: { value: "#3b82f6" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.2, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#3b82f6",
-                        opacity: 0.1,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 1,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- 3D Skill Globe ---
+            const skills = [
+                'Python', 'Golang', 'JavaScript', 'Django', 'FastAPI', 'Fiber',
+                'Gorm', 'Sqlc', 'gRPC', 'Websockets', 'PostgreSQL', 'MySQL',
+                'Redis', 'Docker', 'Kubernetes', 'Git', 'CI/CD', 'AWS',
+                'REST APIs', 'Microservices', 'Linux', 'Socketify', 'Flet', 'HTML5', 'CSS3'
+            ];
+            const skillGlobeContainer = document.getElementById('skill-globe');
+            if (skillGlobeContainer) {
+                TagCloud(skillGlobeContainer, skills, {
+                    radius: Math.min(500, skillGlobeContainer.clientWidth, 300) / 2,
+                    maxSpeed: 'fast',
+                    initSpeed: 'fast',
+                    direction: 135,
+                    keep: true,
+                    itemClass: 'tagcloud--item',
+                });
+                // Recalculate radius on resize
+                window.addEventListener('resize', () => {
+                     const newRadius = Math.min(500, skillGlobeContainer.clientWidth, 300) / 2;
+                     TagCloud(skillGlobeContainer, skills, { radius: newRadius });
+                });
+            }
+
+            // --- 3D Card Tilt Effect ---
+            const cards = document.querySelectorAll('.card-3d');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+
+            // --- Hero Section Parallax Effect ---
+            const heroContent = document.getElementById('hero-content');
+            const hero = document.getElementById('hero');
+            if (heroContent && hero) {
+                hero.addEventListener('mousemove', (e) => {
+                    const { clientX, clientY } = e;
+                    const x = (clientX / window.innerWidth - 0.5) * 40;
+                    const y = (clientY / window.innerHeight - 0.5) * 40;
+                    heroContent.style.transform = `translateX(${-x}px) translateY(${-y}px)`;
+                });
+            }
+
+            // --- Mobile menu toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                });
+            }
+
+            // --- Scroll reveal animation ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
                     }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "grab" },
-                        onclick: { enable: false },
-                        resize: true
-                    },
-                    modes: {
-                        grab: { distance: 140, line_linked: { opacity: 0.2 } }
-                    }
-                },
-                retina_detect: true
-            });
-        }
-        
-        // Set current year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                const icon = mobileMenuButton.querySelector('i');
-                
-                if (mobileMenu.classList.contains('hidden')) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                } else {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                }
-            });
-        }
-        
-        // Scroll reveal animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenuButton.querySelector('i').classList.remove('fa-times');
-                        mobileMenuButton.querySelector('i').classList.add('fa-bars');
-                    }
-                }
-            });
-        });
-        
-        // Active navigation link highlighting
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // --- Smooth scrolling & Active Nav Link ---
+            const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
             
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
+            function updateActiveLink() {
+                let index = sections.length;
+                while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
                 
-                if (pageYOffset >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
+                navLinks.forEach((link) => link.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-link[href="#${sections[index].id}"]`);
+                if (activeLink) activeLink.classList.add('active');
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Initial call
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenuButton.click();
+                        }
+                    }
+                });
             });
             
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
+            // --- Set current year in footer ---
+            document.getElementById('current-year').textContent = new Date().getFullYear();
         });
     </script>
 </body>
