@@ -10,43 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/TagCloud@2.2.0/dist/TagCloud.min.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'dark-bg': '#0a0a1a',
-                        'card-bg': 'rgba(22, 22, 44, 0.4)',
-                        'primary-glow': '#00f6ff',
-                        'secondary-glow': '#ff00f2',
-                        'accent-purple': '#8b5cf6',
-                        'accent-cyan': '#06b6d4',
-                    },
-                    fontFamily: {
-                        'orbitron': ['Orbitron', 'sans-serif'],
-                        'inter': ['Inter', 'sans-serif']
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 5px var(--primary-glow)' },
-                            '100%': { boxShadow: '0 0 20px var(--primary-glow), 0 0 30px var(--secondary-glow)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
+
     <style>
         :root {
             --primary-glow: #00f6ff;
@@ -62,7 +26,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         @keyframes rotate-aurora {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -70,6 +34,19 @@
         @keyframes pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 5px var(--primary-glow); }
             50% { transform: scale(1.2); box-shadow: 0 0 15px var(--primary-glow), 0 0 25px var(--primary-glow); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
         body {
@@ -80,7 +57,7 @@
             overflow-x: hidden;
             position: relative;
         }
-        
+
         body::before, body::after {
             content: '';
             position: fixed;
@@ -134,7 +111,7 @@
             border-radius: 2px;
             box-shadow: 0 0 8px var(--primary-glow);
         }
-        
+
         .card-3d {
             background: var(--card-bg);
             border-radius: 16px;
@@ -305,7 +282,7 @@
         }
         .tagcloud { font-weight: 600; }
         .tagcloud--item:hover { color: var(--primary-glow) !important; }
-        
+
         .orbital-rings {
             position: absolute;
             top: 50%;
@@ -314,9 +291,9 @@
             height: 120%;
             transform: translate(-50%, -50%);
             transform-style: preserve-3d;
-            pointer-events: none;
+            pointer-events: none; 
         }
-        
+
         .ring {
             position: absolute;
             inset: 0;
@@ -326,7 +303,7 @@
             opacity: 0.7;
             animation: orbit 10s linear infinite;
         }
-        
+
         .ring:nth-child(2) {
             animation-delay: -3.3s;
             animation-duration: 8s;
@@ -334,7 +311,7 @@
             border-right-color: var(--secondary-glow);
             transform: rotateX(65deg) rotateY(20deg);
         }
-        
+
         .ring:nth-child(3) {
             animation-delay: -6.6s;
             animation-duration: 12s;
@@ -342,7 +319,7 @@
             border-left-color: #fff;
             transform: rotateX(-65deg) rotateY(10deg);
         }
-        
+
         @keyframes orbit {
             from {
                 transform: rotateZ(0deg) rotateX(75deg) rotateY(0deg);
@@ -352,69 +329,133 @@
             }
         }
         
-        .tech-stack-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
         }
         
-        .skill-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .skill-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-glow);
-            box-shadow: 0 10px 25px rgba(0, 246, 255, 0.2);
-        }
-        
-        .skill-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-        
-        .project-card {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .project-image {
-            height: 180px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 12px 12px 0 0;
-        }
-        
-        .floating-element {
+        .floating {
             animation: float 6s ease-in-out infinite;
         }
         
-        .glow-effect {
-            animation: glow 2s ease-in-out infinite alternate;
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 246, 255, 0.3);
+        }
+        
+        .stats-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 246, 255, 0.2);
+        }
+        
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-badge:hover {
+            transform: scale(1.1);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(30, 41, 59, 0.5);
+            margin: 0 0.5rem;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background-color: var(--primary-glow);
+            margin-left: 3px;
+            animation: blink 1s infinite;
+        }
+        
+        .terminal {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .terminal-button.red { background: #ff5f56; }
+        .terminal-button.yellow { background: #ffbd2e; }
+        .terminal-button.green { background: #27c93f; }
+        
+        .terminal-content {
+            line-height: 1.8;
+        }
+        
+        .terminal-line {
+            margin-bottom: 0.5rem;
+        }
+        
+        .terminal-prompt {
+            color: var(--primary-glow);
+            margin-right: 0.5rem;
+        }
+        
+        .terminal-command {
+            color: #fff;
+        }
+        
+        .terminal-output {
+            color: var(--text-muted);
         }
         
         @media (max-width: 768px) {
             .section { padding: 4rem 1.25rem; }
             .section-title { font-size: 2rem; margin-bottom: 3rem; }
             .hero-text { text-align: center; }
-            .tech-stack-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero-buttons { justify-content: center; }
         }
     </style>
 </head>
@@ -427,19 +468,22 @@
                 <h1 class="text-5xl lg:text-7xl font-black text-white mb-4" style="font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px rgba(0, 246, 255, 0.5);">
                     RajaSunrise
                 </h1>
-                <p class="text-xl text-slate-300 max-w-2xl">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-semibold">Backend Developer</span> specializing in Python & Golang.
+                <p class="text-xl text-slate-300 max-w-2xl mb-6">
+                    <span class="gradient-text font-semibold">Backend Developer</span> specializing in Python & Golang.
                 </p>
-                <div class="flex flex-wrap justify-start gap-4 mt-8">
-                    <a href="#contact" class="btn">
-                        <i class="fas fa-paper-plane mr-2"></i> Contact Me
+                <p class="text-slate-400 mb-8">
+                    Crafting scalable, high-performance backend systems with modern technologies and best practices.
+                </p>
+                <div class="flex flex-wrap justify-start gap-4 mt-8 hero-buttons">
+                    <a href="#projects" class="btn">
+                        <i class="fas fa-code mr-2"></i> View Projects
                     </a>
-                    <a href="#projects" class="btn btn-outline">
-                        <i class="fas fa-code mr-2"></i> My Work
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-paper-plane mr-2"></i> Get In Touch
                     </a>
                 </div>
             </div>
-            <div class="relative flex justify-center items-center floating-element" style="perspective: 1000px;">
+            <div class="relative flex justify-center items-center floating" style="perspective: 1000px;">
                 <div id="hero-image-wrapper" class="w-64 h-64 md:w-80 md:h-80 relative">
                     <div class="orbital-rings">
                         <div class="ring"></div>
@@ -448,13 +492,7 @@
                     </div>
                     
                     <div class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-fuchsia-600 blur-2xl opacity-50 animate-pulse"></div>
-                    <div class="absolute inset-0 rounded-full border-4 border-white/20 shadow-2xl shadow-fuchsia-500/20"></div>
-                    <div class="absolute inset-0 rounded-full border-4 border-white/10 shadow-2xl shadow-cyan-500/20"></div>
-                    <div class="absolute inset-0 rounded-full border-4 border-white/5"></div>
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-fuchsia-600/20 backdrop-blur-sm"></div>
-                    <div class="absolute inset-0 rounded-full flex items-center justify-center text-6xl text-white glow-effect">
-                        <i class="fas fa-terminal"></i>
-                    </div>
+                    <img src="https://placehold.co/400x400/0a0a1a/00f6ff?text=RS" alt="Indra Aryadi" class="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl shadow-fuchsia-500/20 relative z-10">
                 </div>
             </div>
         </div>
@@ -464,7 +502,7 @@
     <nav id="main-nav" class="sticky top-0 z-50 bg-dark-bg/50 backdrop-blur-lg border-b border-white/10">
         <div class="container max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#hero" class="text-3xl font-black text-white" style="font-family: 'Orbitron', sans-serif;">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">RS</span>
+                <span class="gradient-text">RajaSunrise</span>
             </a>
             <ul class="hidden md:flex space-x-8">
                 <li><a href="#about" class="nav-link">About</a></li>
@@ -488,22 +526,48 @@
         </div>
     </nav>
 
+    <!-- Stats Section -->
+    <section class="py-12 bg-dark-bg/30 border-b border-white/10">
+        <div class="container max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stats-card card-3d p-6 text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">50+</div>
+                    <div class="text-slate-400">Projects</div>
+                </div>
+                <div class="stats-card card-3d p-6 text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">3+</div>
+                    <div class="text-slate-400">Years Experience</div>
+                </div>
+                <div class="stats-card card-3d p-6 text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">15+</div>
+                    <div class="text-slate-400">Technologies</div>
+                </div>
+                <div class="stats-card card-3d p-6 text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">20+</div>
+                    <div class="text-slate-400">Libraries</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="section">
         <h2 class="section-title reveal">About Me</h2>
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="card-3d p-8 reveal">
                 <div class="prose prose-invert max-w-none text-slate-300">
-                    <p class="mb-6 text-lg">Hello! I'm a dedicated <span class="font-medium text-white">Backend Developer</span> with a strong passion for designing, building, and maintaining <span class="font-medium text-white">reliable, scalable, and high-performance</span> backend infrastructures.</p>
-                    <p class="mb-6">With a solid foundation in <span class="font-medium text-white">Python</span> and <span class="font-medium text-white">Golang</span>, I'm skilled in transforming complex ideas into efficient software solutions. I'm always challenged by solving intricate problems and committed to producing clean, well-structured code.</p>
-                    <p>I'm a quick learner and always eager to explore new technologies to broaden my expertise in the dynamic world of software development.</p>
-                    <div class="mt-8 flex flex-wrap gap-3">
-                        <span class="px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-full text-sm">Python</span>
-                        <span class="px-3 py-1 bg-fuchsia-500/10 text-fuchsia-400 rounded-full text-sm">Golang</span>
-                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-full text-sm">Docker</span>
-                        <span class="px-3 py-1 bg-amber-500/10 text-amber-400 rounded-full text-sm">REST APIs</span>
-                        <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-sm">Microservices</span>
-                    </div>
+                    <p class="mb-6 text-lg">
+                        Hello! I'm a dedicated <span class="font-medium text-white">Backend Developer</span> with a strong passion for designing, building, and maintaining <span class="font-medium text-white">reliable, scalable, and high-performance</span> backend infrastructures.
+                    </p>
+                    <p class="mb-6">
+                        With a solid foundation in <span class="font-medium text-white">Python</span> and <span class="font-medium text-white">Golang</span>, I'm skilled in transforming complex ideas into efficient software solutions. I'm always challenged by solving intricate problems and committed to producing clean, well-structured code.
+                    </p>
+                    <p class="mb-6">
+                        I believe in continuous learning and staying updated with the latest industry trends. My approach combines technical excellence with creative problem-solving to deliver robust solutions that meet business needs.
+                    </p>
+                    <p>
+                        When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.
+                    </p>
                 </div>
             </div>
             <div class="flex items-center justify-center min-h-[300px] reveal">
@@ -515,69 +579,95 @@
     <!-- Skills Section -->
     <section id="skills" class="section bg-dark-bg/30">
         <h2 class="section-title reveal">Technical Skills</h2>
-        <div class="tech-stack-grid">
-            <div class="skill-card reveal">
-                <div class="skill-icon bg-cyan-500/10 text-cyan-400">
-                    <i class="fas fa-laptop-code"></i>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card-3d p-6 reveal">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-[Orbitron]">Languages</h3>
                 </div>
-                <h3 class="text-xl font-bold font-orbitron text-white mb-3">Languages</h3>
                 <ul class="space-y-2 text-slate-300">
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Python</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Golang (Go)</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Javascript</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>TypeScript</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>SQL</li>
                 </ul>
             </div>
-            
-            <div class="skill-card reveal" style="transition-delay: 100ms;">
-                <div class="skill-icon bg-cyan-500/10 text-cyan-400">
-                    <i class="fab fa-python"></i>
+            <div class="card-3d p-6 reveal" style="transition-delay: 100ms;">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-[Orbitron]">Python Stack</h3>
                 </div>
-                <h3 class="text-xl font-bold font-orbitron text-white mb-3">Python Stack</h3>
                 <ul class="space-y-2 text-slate-300">
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Django & DRF</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>FastAPI</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Flask</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>SQLAlchemy</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Celery</li>
                 </ul>
             </div>
-            
-            <div class="skill-card reveal" style="transition-delay: 200ms;">
-                <div class="skill-icon bg-cyan-500/10 text-cyan-400">
-                    <i class="fab fa-golang"></i>
+            <div class="card-3d p-6 reveal" style="transition-delay: 200ms;">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20">
+                        <i class="fab fa-golang"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-[Orbitron]">Golang Stack</h3>
                 </div>
-                <h3 class="text-xl font-bold font-orbitron text-white mb-3">Golang Stack</h3>
                 <ul class="space-y-2 text-slate-300">
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Fiber, Gorm, Sqlc</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>gRPC & Websockets</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Goroutines & Channels</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Chi Router</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-cyan-400 text-xs mr-3"></i>Ent ORM</li>
                 </ul>
             </div>
-            
-            <div class="skill-card reveal" style="transition-delay: 300ms;">
-                <div class="skill-icon bg-fuchsia-500/10 text-fuchsia-400">
-                    <i class="fas fa-database"></i>
+            <div class="card-3d p-6 reveal" style="transition-delay: 300ms;">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-fuchsia-500/10 flex items-center justify-center mr-4 text-fuchsia-400 text-2xl shadow-inner shadow-fuchsia-500/20">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-[Orbitron]">Databases</h3>
                 </div>
-                <h3 class="text-xl font-bold font-orbitron text-white mb-3">Databases</h3>
                 <ul class="space-y-2 text-slate-300">
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>PostgreSQL</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>MySQL / MariaDB</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Redis</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>MongoDB</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Elasticsearch</li>
                 </ul>
             </div>
-            
-            <div class="skill-card reveal" style="transition-delay: 400ms;">
-                <div class="skill-icon bg-fuchsia-500/10 text-fuchsia-400">
-                    <i class="fas fa-tools"></i>
+            <div class="card-3d p-6 reveal" style="transition-delay: 400ms;">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-fuchsia-500/10 flex items-center justify-center mr-4 text-fuchsia-400 text-2xl shadow-inner shadow-fuchsia-500/20">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-[Orbitron]">Tools & DevOps</h3>
                 </div>
-                <h3 class="text-xl font-bold font-orbitron text-white mb-3">Tools & DevOps</h3>
                 <ul class="space-y-2 text-slate-300">
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Docker & Kubernetes</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Git & CI/CD</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>REST APIs & Microservices</li>
                     <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Linux & AWS</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-fuchsia-400 text-xs mr-3"></i>Terraform & Ansible</li>
+                </ul>
+            </div>
+            <div class="card-3d p-6 reveal" style="transition-delay: 500ms;">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mr-4 text-yellow-400 text-2xl shadow-inner shadow-yellow-500/20">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-[Orbitron]">Cloud & Others</h3>
+                </div>
+                <ul class="space-y-2 text-slate-300">
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 text-xs mr-3"></i>AWS (EC2, S3, Lambda)</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 text-xs mr-3"></i>Google Cloud Platform</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 text-xs mr-3"></i>Nginx & Apache</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 text-xs mr-3"></i>Prometheus & Grafana</li>
+                    <li class="flex items-center"><i class="fas fa-chevron-right text-yellow-400 text-xs mr-3"></i>Message Queues (RabbitMQ, Kafka)</li>
                 </ul>
             </div>
         </div>
@@ -593,17 +683,25 @@
                     <div class="card-3d p-6">
                         <div class="flex flex-wrap justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-xl font-bold text-white font-orbitron">Backend Developer</h3>
-                                <p class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium">NarmadaWeb</p>
+                                <h3 class="text-xl font-bold text-white font-[Orbitron]">Senior Backend Developer</h3>
+                                <p class="gradient-text font-medium">NarmadaWeb</p>
                             </div>
                             <span class="text-slate-400 text-sm bg-slate-800/50 py-1 px-3 rounded-full mt-2 md:mt-0">Sep 2023 - Present</span>
                         </div>
-                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 mb-4">
                             <li>Designing & developing Third Party libraries (Python/Django, Golang/Fiber).</li>
                             <li>Optimized database queries (PostgreSQL), improving performance by 30%.</li>
                             <li>Developed websites (bertani.ai, Art Studio) using Go Fiber and WordPress.</li>
                             <li>Implemented microservices architecture with Golang.</li>
+                            <li>Lead code reviews and mentored junior developers.</li>
                         </ul>
+                        <div class="flex flex-wrap">
+                            <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
+                            <span class="tech-badge bg-green-500/10 text-green-400">Python</span>
+                            <span class="tech-badge bg-purple-500/10 text-purple-400">PostgreSQL</span>
+                            <span class="tech-badge bg-blue-500/10 text-blue-400">Docker</span>
+                            <span class="tech-badge bg-orange-500/10 text-orange-400">AWS</span>
+                        </div>
                     </div>
                 </div>
                 <div class="timeline-item reveal">
@@ -611,16 +709,49 @@
                     <div class="card-3d p-6">
                         <div class="flex flex-wrap justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-xl font-bold text-white font-orbitron">Junior Backend Developer</h3>
-                                <p class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium">Internship</p>
+                                <h3 class="text-xl font-bold text-white font-[Orbitron]">Backend Developer</h3>
+                                <p class="gradient-text font-medium">TechSolutions Inc.</p>
                             </div>
-                            <span class="text-slate-400 text-sm bg-slate-800/50 py-1 px-3 rounded-full mt-2 md:mt-0">Dec 2022 - Mar 2023</span>
+                            <span class="text-slate-400 text-sm bg-slate-800/50 py-1 px-3 rounded-full mt-2 md:mt-0">Apr 2022 - Aug 2023</span>
                         </div>
-                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 mb-4">
+                            <li>Developed RESTful APIs using Django REST Framework.</li>
+                            <li>Implemented caching strategies with Redis, reducing response times by 40%.</li>
+                            <li>Built real-time features using WebSockets and Django Channels.</li>
+                            <li>Containerized applications with Docker for consistent deployments.</li>
+                            <li>Integrated third-party services (Stripe, Twilio, SendGrid).</li>
+                        </ul>
+                        <div class="flex flex-wrap">
+                            <span class="tech-badge bg-cyan-500/10 text-cyan-400">Python</span>
+                            <span class="tech-badge bg-green-500/10 text-green-400">Django</span>
+                            <span class="tech-badge bg-red-500/10 text-red-400">Redis</span>
+                            <span class="tech-badge bg-blue-500/10 text-blue-400">Docker</span>
+                            <span class="tech-badge bg-yellow-500/10 text-yellow-400">WebSockets</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="card-3d p-6">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white font-[Orbitron]">Junior Backend Developer</h3>
+                                <p class="gradient-text font-medium">Internship</p>
+                            </div>
+                            <span class="text-slate-400 text-sm bg-slate-800/50 py-1 px-3 rounded-full mt-2 md:mt-0">Dec 2021 - Mar 2022</span>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 mb-4">
                             <li>Developed Website Creation Services.</li>
                             <li>Maintained and fixed bugs in existing systems.</li>
                             <li>Contributed to small projects using Django.</li>
+                            <li>Learned best practices in code documentation and testing.</li>
                         </ul>
+                        <div class="flex flex-wrap">
+                            <span class="tech-badge bg-cyan-500/10 text-cyan-400">Python</span>
+                            <span class="tech-badge bg-green-500/10 text-green-400">Django</span>
+                            <span class="tech-badge bg-blue-500/10 text-blue-400">HTML/CSS</span>
+                            <span class="tech-badge bg-purple-500/10 text-purple-400">JavaScript</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -631,196 +762,329 @@
     <section id="projects" class="section bg-dark-bg/30">
         <h2 class="section-title reveal">Featured Projects</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <a href="https://github.com/NarmadaWeb/limiter" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
-                <div class="card-3d project-card reveal h-full">
-                    <div class="project-image bg-gradient-to-br from-cyan-900/50 to-fuchsia-900/50 flex items-center justify-center">
-                        <i class="fab fa-golang text-5xl text-cyan-400"></i>
-                    </div>
-                    <div class="p-6 h-full flex flex-col">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white mb-2 font-orbitron">Limiter Library</h3>
-                            <p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber, redis</p>
-                            <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library for rate limiting using Redis and three algorithms.</p>
-                        </div>
-                        <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                    </div>
-                </div>
-            </a>
             
-            <a href="https://github.com/NarmadaWeb/gonify" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
-                <div class="card-3d project-card reveal h-full" style="transition-delay: 100ms;">
-                    <div class="project-image bg-gradient-to-br from-cyan-900/50 to-fuchsia-900/50 flex items-center justify-center">
-                        <i class="fab fa-golang text-5xl text-cyan-400"></i>
-                    </div>
-                    <div class="p-6 h-full flex flex-col">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white mb-2 font-orbitron">Minify Library</h3>
-                            <p class="text-cyan-400 text-sm font-medium mb-3">golang, fiber</p>
-                            <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.</p>
+            <div class="project-card">
+                <a href="https://github.com/NarmadaWeb/limiter" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                    <div class="card-3d reveal h-full">
+                        <div class="p-6 h-full flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20">
+                                    <i class="fab fa-golang"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Limiter Library</h3>
+                                <p class="gradient-text text-sm font-medium mb-3">golang, fiber, redis</p>
+                                <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library for rate limiting using Redis and three algorithms.</p>
+                                <div class="flex flex-wrap mb-4">
+                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
+                                    <span class="tech-badge bg-purple-500/10 text-purple-400">Fiber</span>
+                                    <span class="tech-badge bg-red-500/10 text-red-400">Redis</span>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">
+                                View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </span>
                         </div>
-                        <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="https://github.com/NarmadaWeb/gonify" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                    <div class="card-3d reveal h-full" style="transition-delay: 100ms;">
+                        <div class="p-6 h-full flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-400 text-2xl shadow-inner shadow-cyan-500/20">
+                                    <i class="fab fa-golang"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Minify Library</h3>
+                                <p class="gradient-text text-sm font-medium mb-3">golang, fiber</p>
+                                <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.</p>
+                                <div class="flex flex-wrap mb-4">
+                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
+                                    <span class="tech-badge bg-purple-500/10 text-purple-400">Fiber</span>
+                                    <span class="tech-badge bg-green-500/10 text-green-400">Minification</span>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">
+                                View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                    <div class="card-3d reveal h-full" style="transition-delay: 200ms;">
+                        <div class="p-6 h-full flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4 text-yellow-400 text-2xl shadow-inner shadow-yellow-500/20">
+                                    <i class="fab fa-js"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Sqlc-Snippets</h3>
+                                <p class="gradient-text text-sm font-medium mb-3">Javascript, VS Code</p>
+                                <p class="text-slate-300 text-sm mb-4">VS Code Extension for Sqlc and Postgres snippets to boost development speed.</p>
+                                <div class="flex flex-wrap mb-4">
+                                    <span class="tech-badge bg-yellow-500/10 text-yellow-400">JavaScript</span>
+                                    <span class="tech-badge bg-blue-500/10 text-blue-400">VS Code</span>
+                                    <span class="tech-badge bg-purple-500/10 text-purple-400">PostgreSQL</span>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center text-yellow-400 font-medium text-sm mt-auto">
+                                View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                    <div class="card-3d reveal h-full" style="transition-delay: 300ms;">
+                        <div class="p-6 h-full flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 text-green-400 text-2xl shadow-inner shadow-green-500/20">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">bertani.ai</h3>
+                                <p class="gradient-text text-sm font-medium mb-3">Golang, Fiber, Gorm, AI</p>
+                                <p class="text-slate-300 text-sm mb-4">Developed an agricultural website equipped with AI for agricultural analysis.</p>
+                                <div class="flex flex-wrap mb-4">
+                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
+                                    <span class="tech-badge bg-green-500/10 text-green-400">Fiber</span>
+                                    <span class="tech-badge bg-purple-500/10 text-purple-400">AI</span>
+                                    <span class="tech-badge bg-blue-500/10 text-blue-400">Machine Learning</span>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center text-green-400 font-medium text-sm mt-auto">
+                                View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                    <div class="card-3d reveal h-full" style="transition-delay: 400ms;">
+                        <div class="p-6 h-full flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 text-blue-400 text-2xl shadow-inner shadow-blue-500/20">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Django Fullstack</h3>
+                                <p class="gradient-text text-sm font-medium mb-3">Python, Django</p>
+                                <p class="text-slate-300 text-sm mb-4">Created a Third Party library for Django to simplify and accelerate full-stack development.</p>
+                                <div class="flex flex-wrap mb-4">
+                                    <span class="tech-badge bg-blue-500/10 text-blue-400">Python</span>
+                                    <span class="tech-badge bg-green-500/10 text-green-400">Django</span>
+                                    <span class="tech-badge bg-purple-500/10 text-purple-400">Fullstack</span>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center text-blue-400 font-medium text-sm mt-auto">
+                                View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="https://github.com/RajaSunrise/go-microservices" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                    <div class="card-3d reveal h-full" style="transition-delay: 500ms;">
+                        <div class="p-6 h-full flex flex-col">
+                            <div class="flex-grow">
+                                <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 text-purple-400 text-2xl shadow-inner shadow-purple-500/20">
+                                    <i class="fas fa-network-wired"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2 font-[Orbitron]">Go Microservices</h3>
+                                <p class="gradient-text text-sm font-medium mb-3">Golang, gRPC, Docker</p>
+                                <p class="text-slate-300 text-sm mb-4">A complete microservices architecture built with Go, gRPC, and Docker.</p>
+                                <div class="flex flex-wrap mb-4">
+                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
+                                    <span class="tech-badge bg-red-500/10 text-red-400">gRPC</span>
+                                    <span class="tech-badge bg-blue-500/10 text-blue-400">Docker</span>
+                                    <span class="tech-badge bg-green-500/10 text-green-400">Kubernetes</span>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center text-purple-400 font-medium text-sm mt-auto">
+                                View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terminal Section -->
+    <section class="section">
+        <h2 class="section-title reveal">Code Terminal</h2>
+        <div class="max-w-4xl mx-auto">
+            <div class="card-3d p-6 reveal">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-button red"></div>
+                        <div class="terminal-button yellow"></div>
+                        <div class="terminal-button green"></div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">user@rajasunrise:~$</span>
+                            <span class="terminal-command">cat about.txt</span>
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            Backend Developer with expertise in Python and Golang
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            Specializing in scalable, high-performance systems
+                        </div>
+                        <div class="terminal-line">&nbsp;</div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">user@rajasunrise:~$</span>
+                            <span class="terminal-command">ls -la projects/</span>
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            drwxr-xr-x 12 user user 4096 Jun 15 10:30 limiter/
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            drwxr-xr-x 8 user user 4096 Jun 10 14:22 gonify/
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            drwxr-xr-x 15 user user 4096 May 28 09:15 bertani-ai/
+                        </div>
+                        <div class="terminal-line">&nbsp;</div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">user@rajasunrise:~$</span>
+                            <span class="terminal-command">python skills.py</span>
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            ['Python', 'Golang', 'Django', 'FastAPI', 'Fiber', 'PostgreSQL', 'Redis', 'Docker']
+                        </div>
+                        <div class="terminal-line">&nbsp;</div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">user@rajasunrise:~$</span>
+                            <span class="terminal-command">_</span>
+                            <span class="typing-cursor"></span>
+                        </div>
                     </div>
                 </div>
-            </a>
-            
-            <a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
-                <div class="card-3d project-card reveal h-full" style="transition-delay: 200ms;">
-                    <div class="project-image bg-gradient-to-br from-yellow-900/50 to-amber-900/50 flex items-center justify-center">
-                        <i class="fab fa-js text-5xl text-yellow-400"></i>
-                    </div>
-                    <div class="p-6 h-full flex flex-col">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white mb-2 font-orbitron">Sqlc-Snippets</h3>
-                            <p class="text-yellow-400 text-sm font-medium mb-3">Javascript, VS Code</p>
-                            <p class="text-slate-300 text-sm mb-4">VS Code Extension for Sqlc and Postgres snippets to boost development speed.</p>
-                        </div>
-                        <span class="inline-flex items-center text-yellow-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
-                <div class="card-3d project-card reveal h-full" style="transition-delay: 300ms;">
-                    <div class="project-image bg-gradient-to-br from-green-900/50 to-emerald-900/50 flex items-center justify-center">
-                        <i class="fas fa-leaf text-5xl text-green-400"></i>
-                    </div>
-                    <div class="p-6 h-full flex flex-col">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white mb-2 font-orbitron">bertani.ai</h3>
-                            <p class="text-green-400 text-sm font-medium mb-3">Golang, Fiber, Gorm, AI</p>
-                            <p class="text-slate-300 text-sm mb-4">Developed an agricultural website equipped with AI for agricultural analysis.</p>
-                        </div>
-                        <span class="inline-flex items-center text-green-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
-                <div class="card-3d project-card reveal h-full" style="transition-delay: 400ms;">
-                    <div class="project-image bg-gradient-to-br from-blue-900/50 to-indigo-900/50 flex items-center justify-center">
-                        <i class="fab fa-python text-5xl text-blue-400"></i>
-                    </div>
-                    <div class="p-6 h-full flex flex-col">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white mb-2 font-orbitron">Django Fullstack</h3>
-                            <p class="text-blue-400 text-sm font-medium mb-3">Python, Django</p>
-                            <p class="text-slate-300 text-sm mb-4">Created a Third Party library for Django to simplify and accelerate full-stack development.</p>
-                        </div>
-                        <span class="inline-flex items-center text-blue-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="https://github.com/RajaSunrise" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
-                <div class="card-3d project-card reveal h-full" style="transition-delay: 500ms;">
-                    <div class="project-image bg-gradient-to-br from-purple-900/50 to-fuchsia-900/50 flex items-center justify-center">
-                        <i class="fas fa-code-branch text-5xl text-purple-400"></i>
-                    </div>
-                    <div class="p-6 h-full flex flex-col">
-                        <div class="flex-grow">
-                            <h3 class="text-xl font-bold text-white mb-2 font-orbitron">More Projects</h3>
-                            <p class="text-purple-400 text-sm font-medium mb-3">Various Technologies</p>
-                            <p class="text-slate-300 text-sm mb-4">Check out my GitHub for more open-source contributions and personal projects.</p>
-                        </div>
-                        <span class="inline-flex items-center text-purple-400 font-medium text-sm mt-auto">View on GitHub <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                    </div>
-                </div>
-            </a>
+            </div>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
         <h2 class="section-title reveal">Get In Touch</h2>
-        <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="reveal">
-                <h3 class="text-2xl font-bold text-white mb-6 font-orbitron">Contact Information</h3>
-                <div class="space-y-6">
-                    <div class="flex items-start card-3d p-4">
-                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
-                            <i class="fas fa-envelope"></i>
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="reveal">
+                    <h3 class="text-2xl font-bold text-white mb-6 font-[Orbitron]">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start card-3d p-4">
+                            <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">Email</h4>
+                                <a href="mailto:indra020204@gmail.com" class="text-slate-300 hover:text-cyan-400 transition-colors">
+                                    indra020204@gmail.com
+                                </a>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="font-medium text-white mb-1">Email</h4>
-                            <a href="mailto:indra020204@gmail.com" class="text-slate-300 hover:text-cyan-400 transition-colors">indra020204@gmail.com</a>
+                        <div class="flex items-start card-3d p-4">
+                            <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">
+                                    linkedin.com/in/indra-aryadi
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-start card-3d p-4">
-                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
-                            <i class="fab fa-linkedin"></i>
+                        <div class="flex items-start card-3d p-4">
+                            <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">GitHub</h4>
+                                <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">
+                                    github.com/RajaSunrise
+                                </a>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="font-medium text-white mb-1">LinkedIn</h4>
-                            <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">linkedin.com/in/indra-aryadi</a>
-                        </div>
-                    </div>
-                    <div class="flex items-start card-3d p-4">
-                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-white mb-1">GitHub</h4>
-                            <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-300 hover:text-cyan-400 transition-colors">github.com/RajaSunrise</a>
-                        </div>
-                    </div>
-                    <div class="flex items-start card-3d p-4">
-                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-white mb-1">Location</h4>
-                            <p class="text-slate-300">Indonesia</p>
+                        <div class="flex items-start card-3d p-4">
+                            <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center mr-4 text-cyan-400">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-white mb-1">Location</h4>
+                                <p class="text-slate-300">Jakarta, Indonesia</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Form Kontak -->
-            <div class="card-3d no-tilt p-8 reveal" style="transition-delay: 200ms;">
-                <h3 class="text-2xl font-bold text-white mb-6 font-orbitron">Send a Message</h3>
-                <form action="https://formspree.io/f/your_unique_id" method="POST" class="space-y-4">
-                    <div>
-                        <label for="fullName" class="block text-slate-300 mb-2">Full Name</label>
-                        <input type="text" id="fullName" name="name" class="form-input" placeholder="Your name" required>
+                
+                <div class="reveal" style="transition-delay: 200ms;">
+                    <h3 class="text-2xl font-bold text-white mb-6 font-[Orbitron]">Let's Connect</h3>
+                    <div class="flex flex-wrap justify-center">
+                        <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="social-icon text-cyan-400 hover:bg-cyan-500/20">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/RajaSunrise" target="_blank" class="social-icon text-white hover:bg-white/20">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:indra020204@gmail.com" class="social-icon text-red-400 hover:bg-red-500/20">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="#" class="social-icon text-blue-400 hover:bg-blue-500/20">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon text-purple-400 hover:bg-purple-500/20">
+                            <i class="fab fa-discord"></i>
+                        </a>
                     </div>
-                    <div>
-                        <label for="emailAddress" class="block text-slate-300 mb-2">Email Address</label>
-                        <input type="email" id="emailAddress" name="email" class="form-input" placeholder="your.email@example.com" required>
+                    
+                    <div class="mt-8 card-3d p-6">
+                        <h4 class="text-xl font-bold text-white mb-4">Quick Message</h4>
+                        <p class="text-slate-300 mb-4">
+                            Have a project in mind or want to discuss potential opportunities? Feel free to reach out!
+                        </p>
+                        <a href="mailto:indra020204@gmail.com" class="btn w-full">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Email
+                        </a>
                     </div>
-                    <div>
-                        <label for="message" class="block text-slate-300 mb-2">Message</label>
-                        <textarea id="message" name="message" class="form-input min-h-[120px]" placeholder="Your message..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn w-full mt-4">
-                        <i class="fas fa-paper-plane mr-2"></i> Send Message
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-10 border-t border-white/10 text-center">
+    <footer class="py-12 border-t border-white/10 text-center">
         <div class="container max-w-6xl mx-auto px-6">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-cyan-400">
-                    <i class="fab fa-linkedin"></i>
+                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="social-icon text-cyan-400 hover:bg-cyan-500/20">
+                    <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://github.com/RajaSunrise" target="_blank" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-fuchsia-400">
+                <a href="https://github.com/RajaSunrise" target="_blank" class="social-icon text-white hover:bg-white/20">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="mailto:indra020204@gmail.com" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-yellow-400">
+                <a href="mailto:indra020204@gmail.com" class="social-icon text-red-400 hover:bg-red-500/20">
                     <i class="fas fa-envelope"></i>
                 </a>
-                <a href="#" class="text-slate-400 hover:text-white transition-all text-2xl hover:scale-125 hover:text-purple-400">
+                <a href="#" class="social-icon text-blue-400 hover:bg-blue-500/20">
                     <i class="fab fa-twitter"></i>
                 </a>
+                <a href="#" class="social-icon text-purple-400 hover:bg-purple-500/20">
+                    <i class="fab fa-discord"></i>
+                </a>
             </div>
-            <p class="text-slate-500">
-                © <span id="current-year"></span> Indra Aryadi. All rights reserved. 
-                Designed with <i class="fas fa-heart text-red-500"></i> & <i class="fas fa-code text-cyan-400"></i>.
+            <p class="text-slate-500 mb-4">
+                © <span id="current-year"></span> Indra Aryadi. All rights reserved.
             </p>
-            <p class="text-slate-600 text-sm mt-2">
-                Crafted with modern web technologies and a passion for backend development
+            <p class="text-slate-500">
+                Designed with <i class="fas fa-heart text-red-500"></i> & <i class="fas fa-code text-cyan-400"></i> using modern web technologies.
             </p>
         </div>
     </footer>
@@ -829,10 +1093,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             // --- 3D Skill Globe ---
             const skills = [
-                'Python', 'Golang', 'JavaScript', 'Django', 'FastAPI', 'Fiber',
-                'Gorm', 'Sqlc', 'gRPC', 'Websockets', 'PostgreSQL', 'MySQL',
-                'Redis', 'Docker', 'Kubernetes', 'Git', 'CI/CD', 'AWS',
-                'REST APIs', 'Microservices', 'Linux', 'Socketify', 'Flet', 'HTML5', 'CSS3'
+                'Python', 'Golang', 'JavaScript', 'TypeScript', 'Django', 'FastAPI', 'Flask', 'Fiber',
+                'Gorm', 'Sqlc', 'gRPC', 'Websockets', 'PostgreSQL', 'MySQL', 'MongoDB',
+                'Redis', 'Docker', 'Kubernetes', 'Git', 'CI/CD', 'AWS', 'GCP',
+                'REST APIs', 'Microservices', 'Linux', 'Terraform', 'Ansible', 'Prometheus',
+                'Grafana', 'RabbitMQ', 'Kafka', 'Elasticsearch', 'Nginx', 'Apache'
             ];
             const skillGlobeContainer = document.getElementById('skill-globe');
             if (skillGlobeContainer) {
@@ -845,8 +1110,8 @@
                     itemClass: 'tagcloud--item',
                 });
                 window.addEventListener('resize', () => {
-                    const newRadius = Math.min(500, skillGlobeContainer.clientWidth, 300) / 2;
-                    TagCloud(skillGlobeContainer, skills, { radius: newRadius });
+                     const newRadius = Math.min(500, skillGlobeContainer.clientWidth, 300) / 2;
+                     TagCloud(skillGlobeContainer, skills, { radius: newRadius });
                 });
             }
 
@@ -923,7 +1188,7 @@
             }
 
             window.addEventListener('scroll', updateActiveLink);
-            updateActiveLink();
+            updateActiveLink(); 
             
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
