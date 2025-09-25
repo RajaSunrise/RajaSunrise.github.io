@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Indra Aryadi (RajaSunrise) - Backend Developer specializing in Python & Golang. Building scalable, high-performance systems.">
+    <meta name="keywords" content="Backend Developer, Python, Golang, Django, FastAPI, Fiber, Portfolio">
+    <meta name="author" content="Indra Aryadi">
     <title>RajaSunrise | Backend Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -10,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/TagCloud@2.2.0/dist/TagCloud.min.js"></script>
+    <link rel="icon" href="https://github.com/RajaSunrise/RajaSunrise.github.io/blob/main/profile.JPG?raw=true" type="image/jpeg">
 
     <style>
         :root {
@@ -47,6 +51,10 @@
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         
         body {
@@ -110,15 +118,16 @@
             background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
             border-radius: 2px;
             box-shadow: 0 0 8px var(--primary-glow);
+            animation: shimmer 2s linear infinite;
         }
 
         .card-3d {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             transform-style: preserve-3d;
             position: relative;
@@ -127,8 +136,8 @@
             content: "";
             position: absolute;
             inset: 0;
-            border-radius: 16px;
-            padding: 1px;
+            border-radius: 20px;
+            padding: 2px;
             background: conic-gradient(from var(--angle), transparent 25%, var(--primary-glow), var(--secondary-glow), transparent 75%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -185,7 +194,7 @@
             background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
             color: var(--dark-bg);
             padding: 0.8rem 2rem;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 700;
             font-family: 'Orbitron', sans-serif;
             transition: all 0.3s ease;
@@ -373,10 +382,13 @@
             font-weight: 600;
             margin: 0.25rem;
             transition: all 0.3s ease;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1));
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .tech-badge:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 246, 255, 0.3);
         }
         
         .social-icon {
@@ -389,6 +401,7 @@
             border-radius: 50%;
             background: rgba(30, 41, 59, 0.5);
             margin: 0 0.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .social-icon:hover {
@@ -407,7 +420,7 @@
         
         .terminal {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 1.5rem;
             font-family: 'Courier New', monospace;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -457,9 +470,49 @@
             .hero-text { text-align: center; }
             .hero-buttons { justify-content: center; }
         }
+
+        /* New: Particle Background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-glow);
+            border-radius: 50%;
+            animation: particle-float 20s linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Particle Background -->
+    <canvas id="particles"></canvas>
+
     <!-- Hero Section -->
     <header id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden py-20 px-4">
         <div class="absolute inset-0 z-0" style="background: radial-gradient(ellipse at center, rgba(10, 10, 26, 0.5) 0%, var(--dark-bg) 70%);"></div>
@@ -492,7 +545,7 @@
                     </div>
                     
                     <div class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-fuchsia-600 blur-2xl opacity-50 animate-pulse"></div>
-                    <img src="https://github.com/RajaSunrise/RajaSunrise.github.io/blob/main/profile.JPG?raw=true" alt="Indra Aryadi" class="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl shadow-fuchsia-500/20 relative z-10">
+                    <img src="https://github.com/RajaSunrise/RajaSunrise.github.io/blob/main/profile.JPG?raw=true" alt="Indra Aryadi" class="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl shadow-fuchsia-500/20 relative z-10" loading="lazy">
                 </div>
             </div>
         </div>
@@ -511,7 +564,7 @@
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <button id="mobile-menu-button" class="md:hidden text-slate-300">
+            <button id="mobile-menu-button" class="md:hidden text-slate-300" aria-label="Toggle menu">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
@@ -530,19 +583,19 @@
     <section class="py-12 bg-dark-bg/30 border-b border-white/10">
         <div class="container max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="stats-card card-3d p-6 text-center">
+                <div class="stats-card card-3d p-6 text-center" role="img" aria-label="50+ Projects">
                     <div class="text-3xl font-bold gradient-text mb-2">50+</div>
                     <div class="text-slate-400">Projects</div>
                 </div>
-                <div class="stats-card card-3d p-6 text-center">
+                <div class="stats-card card-3d p-6 text-center" role="img" aria-label="3+ Years Experience">
                     <div class="text-3xl font-bold gradient-text mb-2">3+</div>
                     <div class="text-slate-400">Years Experience</div>
                 </div>
-                <div class="stats-card card-3d p-6 text-center">
+                <div class="stats-card card-3d p-6 text-center" role="img" aria-label="15+ Technologies">
                     <div class="text-3xl font-bold gradient-text mb-2">15+</div>
                     <div class="text-slate-400">Technologies</div>
                 </div>
-                <div class="stats-card card-3d p-6 text-center">
+                <div class="stats-card card-3d p-6 text-center" role="img" aria-label="20+ Libraries">
                     <div class="text-3xl font-bold gradient-text mb-2">20+</div>
                     <div class="text-slate-400">Libraries</div>
                 </div>
@@ -571,7 +624,7 @@
                 </div>
             </div>
             <div class="flex items-center justify-center min-h-[300px] reveal">
-                <div id="skill-globe" class="w-full h-full"></div>
+                <div id="skill-globe" class="w-full h-full" role="img" aria-label="3D Skills Globe"></div>
             </div>
         </div>
     </section>
@@ -696,11 +749,11 @@
                             <li>Lead code reviews and mentored junior developers.</li>
                         </ul>
                         <div class="flex flex-wrap">
-                            <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
-                            <span class="tech-badge bg-green-500/10 text-green-400">Python</span>
-                            <span class="tech-badge bg-purple-500/10 text-purple-400">PostgreSQL</span>
-                            <span class="tech-badge bg-blue-500/10 text-blue-400">Docker</span>
-                            <span class="tech-badge bg-orange-500/10 text-orange-400">AWS</span>
+                            <span class="tech-badge text-cyan-400">Golang</span>
+                            <span class="tech-badge text-green-400">Python</span>
+                            <span class="tech-badge text-purple-400">PostgreSQL</span>
+                            <span class="tech-badge text-blue-400">Docker</span>
+                            <span class="tech-badge text-orange-400">AWS</span>
                         </div>
                     </div>
                 </div>
@@ -722,11 +775,11 @@
                             <li>Integrated third-party services (Stripe, Twilio, SendGrid).</li>
                         </ul>
                         <div class="flex flex-wrap">
-                            <span class="tech-badge bg-cyan-500/10 text-cyan-400">Python</span>
-                            <span class="tech-badge bg-green-500/10 text-green-400">Django</span>
-                            <span class="tech-badge bg-red-500/10 text-red-400">Redis</span>
-                            <span class="tech-badge bg-blue-500/10 text-blue-400">Docker</span>
-                            <span class="tech-badge bg-yellow-500/10 text-yellow-400">WebSockets</span>
+                            <span class="tech-badge text-cyan-400">Python</span>
+                            <span class="tech-badge text-green-400">Django</span>
+                            <span class="tech-badge text-red-400">Redis</span>
+                            <span class="tech-badge text-blue-400">Docker</span>
+                            <span class="tech-badge text-yellow-400">WebSockets</span>
                         </div>
                     </div>
                 </div>
@@ -747,10 +800,10 @@
                             <li>Learned best practices in code documentation and testing.</li>
                         </ul>
                         <div class="flex flex-wrap">
-                            <span class="tech-badge bg-cyan-500/10 text-cyan-400">Python</span>
-                            <span class="tech-badge bg-green-500/10 text-green-400">Django</span>
-                            <span class="tech-badge bg-blue-500/10 text-blue-400">HTML/CSS</span>
-                            <span class="tech-badge bg-purple-500/10 text-purple-400">JavaScript</span>
+                            <span class="tech-badge text-cyan-400">Python</span>
+                            <span class="tech-badge text-green-400">Django</span>
+                            <span class="tech-badge text-blue-400">HTML/CSS</span>
+                            <span class="tech-badge text-purple-400">JavaScript</span>
                         </div>
                     </div>
                 </div>
@@ -764,7 +817,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
             <div class="project-card">
-                <a href="https://github.com/NarmadaWeb/limiter" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <a href="https://github.com/NarmadaWeb/limiter" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300" aria-label="Limiter Library Project">
                     <div class="card-3d reveal h-full">
                         <div class="p-6 h-full flex flex-col">
                             <div class="flex-grow">
@@ -775,9 +828,9 @@
                                 <p class="gradient-text text-sm font-medium mb-3">golang, fiber, redis</p>
                                 <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library for rate limiting using Redis and three algorithms.</p>
                                 <div class="flex flex-wrap mb-4">
-                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
-                                    <span class="tech-badge bg-purple-500/10 text-purple-400">Fiber</span>
-                                    <span class="tech-badge bg-red-500/10 text-red-400">Redis</span>
+                                    <span class="tech-badge text-cyan-400">Golang</span>
+                                    <span class="tech-badge text-purple-400">Fiber</span>
+                                    <span class="tech-badge text-red-400">Redis</span>
                                 </div>
                             </div>
                             <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">
@@ -789,7 +842,7 @@
             </div>
 
             <div class="project-card">
-                <a href="https://github.com/NarmadaWeb/gonify" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <a href="https://github.com/NarmadaWeb/gonify" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300" aria-label="Minify Library Project">
                     <div class="card-3d reveal h-full" style="transition-delay: 100ms;">
                         <div class="p-6 h-full flex flex-col">
                             <div class="flex-grow">
@@ -800,9 +853,9 @@
                                 <p class="gradient-text text-sm font-medium mb-3">golang, fiber</p>
                                 <p class="text-slate-300 text-sm mb-4">Go Fiber third-party library to minify HTML, CSS, JS, JSON, XML, and SVG.</p>
                                 <div class="flex flex-wrap mb-4">
-                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
-                                    <span class="tech-badge bg-purple-500/10 text-purple-400">Fiber</span>
-                                    <span class="tech-badge bg-green-500/10 text-green-400">Minification</span>
+                                    <span class="tech-badge text-cyan-400">Golang</span>
+                                    <span class="tech-badge text-purple-400">Fiber</span>
+                                    <span class="tech-badge text-green-400">Minification</span>
                                 </div>
                             </div>
                             <span class="inline-flex items-center text-cyan-400 font-medium text-sm mt-auto">
@@ -814,7 +867,7 @@
             </div>
 
             <div class="project-card">
-                <a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <a href="https://github.com/NarmadaWeb/sqlc-snippets" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300" aria-label="Sqlc-Snippets Project">
                     <div class="card-3d reveal h-full" style="transition-delay: 200ms;">
                         <div class="p-6 h-full flex flex-col">
                             <div class="flex-grow">
@@ -825,9 +878,9 @@
                                 <p class="gradient-text text-sm font-medium mb-3">Javascript, VS Code</p>
                                 <p class="text-slate-300 text-sm mb-4">VS Code Extension for Sqlc and Postgres snippets to boost development speed.</p>
                                 <div class="flex flex-wrap mb-4">
-                                    <span class="tech-badge bg-yellow-500/10 text-yellow-400">JavaScript</span>
-                                    <span class="tech-badge bg-blue-500/10 text-blue-400">VS Code</span>
-                                    <span class="tech-badge bg-purple-500/10 text-purple-400">PostgreSQL</span>
+                                    <span class="tech-badge text-yellow-400">JavaScript</span>
+                                    <span class="tech-badge text-blue-400">VS Code</span>
+                                    <span class="tech-badge text-purple-400">PostgreSQL</span>
                                 </div>
                             </div>
                             <span class="inline-flex items-center text-yellow-400 font-medium text-sm mt-auto">
@@ -839,7 +892,7 @@
             </div>
 
             <div class="project-card">
-                <a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <a href="https://github.com/NarmadaWeb/bertani-ai" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300" aria-label="bertani.ai Project">
                     <div class="card-3d reveal h-full" style="transition-delay: 300ms;">
                         <div class="p-6 h-full flex flex-col">
                             <div class="flex-grow">
@@ -850,10 +903,10 @@
                                 <p class="gradient-text text-sm font-medium mb-3">Golang, Fiber, Gorm, AI</p>
                                 <p class="text-slate-300 text-sm mb-4">Developed an agricultural website equipped with AI for agricultural analysis.</p>
                                 <div class="flex flex-wrap mb-4">
-                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
-                                    <span class="tech-badge bg-green-500/10 text-green-400">Fiber</span>
-                                    <span class="tech-badge bg-purple-500/10 text-purple-400">AI</span>
-                                    <span class="tech-badge bg-blue-500/10 text-blue-400">Machine Learning</span>
+                                    <span class="tech-badge text-cyan-400">Golang</span>
+                                    <span class="tech-badge text-green-400">Fiber</span>
+                                    <span class="tech-badge text-purple-400">AI</span>
+                                    <span class="tech-badge text-blue-400">Machine Learning</span>
                                 </div>
                             </div>
                             <span class="inline-flex items-center text-green-400 font-medium text-sm mt-auto">
@@ -865,7 +918,7 @@
             </div>
 
             <div class="project-card">
-                <a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <a href="https://github.com/RajaSunrise/django-fullstack" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300" aria-label="Django Fullstack Project">
                     <div class="card-3d reveal h-full" style="transition-delay: 400ms;">
                         <div class="p-6 h-full flex flex-col">
                             <div class="flex-grow">
@@ -876,9 +929,9 @@
                                 <p class="gradient-text text-sm font-medium mb-3">Python, Django</p>
                                 <p class="text-slate-300 text-sm mb-4">Created a Third Party library for Django to simplify and accelerate full-stack development.</p>
                                 <div class="flex flex-wrap mb-4">
-                                    <span class="tech-badge bg-blue-500/10 text-blue-400">Python</span>
-                                    <span class="tech-badge bg-green-500/10 text-green-400">Django</span>
-                                    <span class="tech-badge bg-purple-500/10 text-purple-400">Fullstack</span>
+                                    <span class="tech-badge text-blue-400">Python</span>
+                                    <span class="tech-badge text-green-400">Django</span>
+                                    <span class="tech-badge text-purple-400">Fullstack</span>
                                 </div>
                             </div>
                             <span class="inline-flex items-center text-blue-400 font-medium text-sm mt-auto">
@@ -890,7 +943,7 @@
             </div>
 
             <div class="project-card">
-                <a href="https://github.com/RajaSunrise/go-microservices" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300">
+                <a href="https://github.com/RajaSunrise/go-microservices" target="_blank" rel="noopener noreferrer" class="block transition-all duration-300" aria-label="Go Microservices Project">
                     <div class="card-3d reveal h-full" style="transition-delay: 500ms;">
                         <div class="p-6 h-full flex flex-col">
                             <div class="flex-grow">
@@ -901,10 +954,10 @@
                                 <p class="gradient-text text-sm font-medium mb-3">Golang, gRPC, Docker</p>
                                 <p class="text-slate-300 text-sm mb-4">A complete microservices architecture built with Go, gRPC, and Docker.</p>
                                 <div class="flex flex-wrap mb-4">
-                                    <span class="tech-badge bg-cyan-500/10 text-cyan-400">Golang</span>
-                                    <span class="tech-badge bg-red-500/10 text-red-400">gRPC</span>
-                                    <span class="tech-badge bg-blue-500/10 text-blue-400">Docker</span>
-                                    <span class="tech-badge bg-green-500/10 text-green-400">Kubernetes</span>
+                                    <span class="tech-badge text-cyan-400">Golang</span>
+                                    <span class="tech-badge text-red-400">gRPC</span>
+                                    <span class="tech-badge text-blue-400">Docker</span>
+                                    <span class="tech-badge text-green-400">Kubernetes</span>
                                 </div>
                             </div>
                             <span class="inline-flex items-center text-purple-400 font-medium text-sm mt-auto">
@@ -1029,19 +1082,19 @@
                 <div class="reveal" style="transition-delay: 200ms;">
                     <h3 class="text-2xl font-bold text-white mb-6 font-[Orbitron]">Let's Connect</h3>
                     <div class="flex flex-wrap justify-center">
-                        <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="social-icon text-cyan-400 hover:bg-cyan-500/20">
+                        <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="social-icon text-cyan-400 hover:bg-cyan-500/20" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="https://github.com/RajaSunrise" target="_blank" class="social-icon text-white hover:bg-white/20">
+                        <a href="https://github.com/RajaSunrise" target="_blank" class="social-icon text-white hover:bg-white/20" aria-label="GitHub">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="mailto:indra020204@gmail.com" class="social-icon text-red-400 hover:bg-red-500/20">
+                        <a href="mailto:indra020204@gmail.com" class="social-icon text-red-400 hover:bg-red-500/20" aria-label="Email">
                             <i class="fas fa-envelope"></i>
                         </a>
-                        <a href="#" class="social-icon text-blue-400 hover:bg-blue-500/20">
+                        <a href="#" class="social-icon text-blue-400 hover:bg-blue-500/20" aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="social-icon text-purple-400 hover:bg-purple-500/20">
+                        <a href="#" class="social-icon text-purple-400 hover:bg-purple-500/20" aria-label="Discord">
                             <i class="fab fa-discord"></i>
                         </a>
                     </div>
@@ -1064,19 +1117,19 @@
     <footer class="py-12 border-t border-white/10 text-center">
         <div class="container max-w-6xl mx-auto px-6">
             <div class="flex justify-center space-x-6 mb-6">
-                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="social-icon text-cyan-400 hover:bg-cyan-500/20">
+                <a href="https://www.linkedin.com/in/indra-aryadi-961a98243" target="_blank" class="social-icon text-cyan-400 hover:bg-cyan-500/20" aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://github.com/RajaSunrise" target="_blank" class="social-icon text-white hover:bg-white/20">
+                <a href="https://github.com/RajaSunrise" target="_blank" class="social-icon text-white hover:bg-white/20" aria-label="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="mailto:indra020204@gmail.com" class="social-icon text-red-400 hover:bg-red-500/20">
+                <a href="mailto:indra020204@gmail.com" class="social-icon text-red-400 hover:bg-red-500/20" aria-label="Email">
                     <i class="fas fa-envelope"></i>
                 </a>
-                <a href="#" class="social-icon text-blue-400 hover:bg-blue-500/20">
+                <a href="#" class="social-icon text-blue-400 hover:bg-blue-500/20" aria-label="Twitter">
                     <i class="fab fa-twitter"></i>
                 </a>
-                <a href="#" class="social-icon text-purple-400 hover:bg-purple-500/20">
+                <a href="#" class="social-icon text-purple-400 hover:bg-purple-500/20" aria-label="Discord">
                     <i class="fab fa-discord"></i>
                 </a>
             </div>
@@ -1091,6 +1144,45 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Particle Animation
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            for (let i = 0; i < 50; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: Math.random() * 0.5 + 0.5,
+                    opacity: Math.random() * 0.5 + 0.5
+                });
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 246, 255, ${p.opacity})`;
+                    ctx.fill();
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.y > canvas.height) p.y = 0;
+                    if (p.x > canvas.width || p.x < 0) p.vx = -p.vx;
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
             // --- 3D Skill Globe ---
             const skills = [
                 'Python', 'Golang', 'JavaScript', 'TypeScript', 'Django', 'FastAPI', 'Flask', 'Fiber',
